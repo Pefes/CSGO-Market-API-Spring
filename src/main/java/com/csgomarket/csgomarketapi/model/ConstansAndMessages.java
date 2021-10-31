@@ -14,4 +14,12 @@ public interface ConstansAndMessages {
     String ITEM_EXTERIOR = "exterior";
     String ITEM_OPENABLE = "openable";
     String ITEM_PRICE = "price";
+
+//    USERS COLLECTION
+    String USERS_COLLECTION = "users";
+    String USER_USERNAME = "username";
+
+    String SUCCESS = "Success";
+    String FAIL = "Fail";
+    String USERNAME_ALREADY_EXISTS = "Username already exists";
 }

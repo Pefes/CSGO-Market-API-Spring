@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GetItemsRequest {
+
     private FiltersData filtersData;
+
     private PaginatorData paginatorData;
 }

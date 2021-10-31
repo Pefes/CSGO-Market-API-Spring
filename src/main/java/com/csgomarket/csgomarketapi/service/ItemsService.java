@@ -1,6 +1,6 @@
 package com.csgomarket.csgomarketapi.service;
 
-import com.csgomarket.csgomarketapi.model.Item;
+import com.csgomarket.csgomarketapi.model.item.Item;
 import com.csgomarket.csgomarketapi.payload.request.getitems.FiltersData;
 import com.csgomarket.csgomarketapi.payload.request.getitems.GetItemsRequest;
 import com.csgomarket.csgomarketapi.payload.request.getitems.PaginatorData;
@@ -11,12 +11,12 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import static com.csgomarket.csgomarketapi.model.ConstansAndMessages.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
-import java.util.List;
-import java.util.regex.Pattern;
 
 @Service
 public class ItemsService {

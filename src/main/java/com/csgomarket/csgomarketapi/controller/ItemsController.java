@@ -1,14 +1,10 @@
 package com.csgomarket.csgomarketapi.controller;
 
-import com.csgomarket.csgomarketapi.model.Item;
+import com.csgomarket.csgomarketapi.model.item.Item;
 import com.csgomarket.csgomarketapi.payload.request.getitems.GetItemsRequest;
 import com.csgomarket.csgomarketapi.service.ItemsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
@@ -18,7 +14,7 @@ public class ItemsController {
     @Autowired
     private ItemsService itemsService;
 
-    @GetMapping("getMarketItems")
+    @PostMapping("getMarketItems")
     public List<Item> getMarketItems(@RequestBody GetItemsRequest requestBody) {
         return itemsService.getMarketItems(requestBody);
     }
