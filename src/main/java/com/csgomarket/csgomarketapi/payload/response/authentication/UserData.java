@@ -1,4 +1,4 @@
-package com.csgomarket.csgomarketapi.payload.response;
+package com.csgomarket.csgomarketapi.payload.response.authentication;
 
 import com.csgomarket.csgomarketapi.model.user.UserSettings;
 import lombok.AllArgsConstructor;

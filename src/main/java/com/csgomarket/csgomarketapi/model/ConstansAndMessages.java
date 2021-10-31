@@ -5,6 +5,7 @@ public interface ConstansAndMessages {
     int DEFAULT_PAGE_SIZE = 25;
     String SORTING_ASC = "asc";
     String SORTING_DESC = "desc";
+    String ID = "id";
 
 //    ITEMS COLLECTION
     String ITEMS_COLLECTION = "items";
@@ -14,6 +15,7 @@ public interface ConstansAndMessages {
     String ITEM_EXTERIOR = "exterior";
     String ITEM_OPENABLE = "openable";
     String ITEM_PRICE = "price";
+    String ITEM_PURCHASABLE = "purchasable";
 
 //    USERS COLLECTION
     String USERS_COLLECTION = "users";

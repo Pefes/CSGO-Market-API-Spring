@@ -2,7 +2,7 @@ package com.csgomarket.csgomarketapi.controller;
 
 import com.csgomarket.csgomarketapi.payload.request.authentication.AuthenticationRequest;
 import com.csgomarket.csgomarketapi.payload.response.ApiResponse;
-import com.csgomarket.csgomarketapi.payload.response.LoginResponse;
+import com.csgomarket.csgomarketapi.payload.response.authentication.LoginResponse;
 import com.csgomarket.csgomarketapi.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

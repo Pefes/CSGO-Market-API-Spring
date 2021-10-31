@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @Builder
@@ -20,6 +21,8 @@ public class UserDetailsImpl implements UserDetails {
     private long cash;
 
     private UserSettings userSettings;
+
+    private List<String> ownedItems;
 
     private final Collection<? extends GrantedAuthority> authorities = null;
 
