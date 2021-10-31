@@ -33,7 +33,7 @@ public class ItemsService {
     public ApiResponse<GetItemsResponse> getMarketItems(GetItemsRequest request) {
         Query query = getMarketItemsQuery(request.getFiltersData(), request.getPaginatorData());
         long querySize = getQuerySize(query);
-        List<Item> items = querySize > 0 ? mongoTemplate.find(query, Item.class) : null;
+        List<Item> items = querySize > 0 ? mongoTemplate.find(query, Item.class) : List.of();
         return getApiResponse(SUCCESS, null, GetItemsResponse.builder()
                 .items(items)
                 .querySize(querySize)
@@ -43,7 +43,7 @@ public class ItemsService {
     public ApiResponse<GetItemsResponse> getOwnedItems(GetItemsRequest request) {
         Query query = getOwnedItemsQuery(request.getFiltersData(), request.getPaginatorData());
         long querySize = getQuerySize(query);
-        List<Item> items = querySize > 0 ? mongoTemplate.find(query, Item.class) : null;
+        List<Item> items = querySize > 0 ? mongoTemplate.find(query, Item.class) : List.of();
         return getApiResponse(SUCCESS, null, GetItemsResponse.builder()
                 .items(items)
                 .querySize(querySize)
