@@ -20,7 +20,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String[] AUTH_WHITE_LIST = { "/api/login", "/api/register", "/api/getMarketItems" };
+    private static final String[] AUTH_WHITE_LIST = {
+            "/api/login", "/api/register", "/api/getMarketItems", "/v2/api-docs",
+            "/v3/api-docs", "/swagger-ui/**", "/swagger-resources/**"
+    };
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
