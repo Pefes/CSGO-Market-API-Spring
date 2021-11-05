@@ -24,4 +24,8 @@ public interface ConstansAndMessages {
     String SUCCESS = "Success";
     String FAIL = "Fail";
     String USERNAME_ALREADY_EXISTS = "Username already exists";
+
+//    MESSAGES
+    String MESSAGE_BUY_ITEM_ERROR = "Could not buy item";
+    String MESSAGE_SELL_ITEM_ERROR = "Could not sell item";
 }

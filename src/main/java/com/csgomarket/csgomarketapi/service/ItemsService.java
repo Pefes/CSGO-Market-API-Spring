@@ -70,9 +70,29 @@ public class ItemsService {
             item.setPurchasable(false);
             mongoTemplate.save(user);
             mongoTemplate.save(item);
+
+            return getApiResponse(SUCCESS, null, null);
         }
 
-        return getApiResponse(SUCCESS, null, null);
+        return getApiResponse(FAIL, MESSAGE_BUY_ITEM_ERROR, null);
+    }
+
+    public ApiResponse<?> sellItem(String itemId) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Item item = mongoTemplate.findById(itemId, Item.class);
+        User user = mongoTemplate.findById(userDetails.getId(), User.class);
+
+        if (item != null && user != null && !item.isPurchasable() && user.getOwnedItems().contains(item.getId())) {
+            user.getOwnedItems().remove(item.getId());
+            user.setCash(user.getCash().add(item.getPrice()));
+            item.setPurchasable(true);
+            mongoTemplate.save(user);
+            mongoTemplate.save(item);
+
+            return getApiResponse(SUCCESS, null, null);
+        }
+
+        return getApiResponse(FAIL, MESSAGE_SELL_ITEM_ERROR, null);
     }
 
     private Query getMarketItemsQuery(FiltersData filtersData, PaginatorData paginatorData) {
