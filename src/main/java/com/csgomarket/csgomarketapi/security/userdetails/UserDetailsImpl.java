@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
@@ -13,12 +15,14 @@ import java.util.List;
 @Builder
 public class UserDetailsImpl implements UserDetails {
 
+    private String id;
+
     private String username;
 
     @JsonIgnore
     private String password;
 
-    private long cash;
+    private BigDecimal cash;
 
     private UserSettings userSettings;
 

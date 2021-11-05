@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.csgomarket.csgomarketapi.model.ConstansAndMessages.USERS_COLLECTION;
@@ -23,7 +24,7 @@ public class User {
 
     private String password;
 
-    private long cash;
+    private BigDecimal cash;
 
     private UserSettings userSettings;
 

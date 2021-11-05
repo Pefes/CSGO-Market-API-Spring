@@ -3,6 +3,8 @@ package com.csgomarket.csgomarketapi.model.item;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.csgomarket.csgomarketapi.model.ConstansAndMessages.ITEMS_COLLECTION;
@@ -26,7 +28,7 @@ public class Item {
 
     private String rarityColor;
 
-    private float price;
+    private BigDecimal price;
 
     private boolean purchasable;
 

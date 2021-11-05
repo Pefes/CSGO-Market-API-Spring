@@ -1,6 +1,7 @@
 package com.csgomarket.csgomarketapi.service;
 
 import com.csgomarket.csgomarketapi.model.item.Item;
+import com.csgomarket.csgomarketapi.model.user.User;
 import com.csgomarket.csgomarketapi.payload.request.getitems.FiltersData;
 import com.csgomarket.csgomarketapi.payload.request.getitems.GetItemsRequest;
 import com.csgomarket.csgomarketapi.payload.request.getitems.PaginatorData;
@@ -56,6 +57,22 @@ public class ItemsService {
                 .items(items)
                 .querySize(3)
                 .build());
+    }
+
+    public ApiResponse<?> buyItem(String itemId) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Item item = mongoTemplate.findById(itemId, Item.class);
+        User user = mongoTemplate.findById(userDetails.getId(), User.class);
+
+        if (item != null && user != null && item.isPurchasable() && user.getCash().compareTo(item.getPrice()) >= 0) {
+            user.getOwnedItems().add(item.getId());
+            user.setCash(user.getCash().subtract(item.getPrice()));
+            item.setPurchasable(false);
+            mongoTemplate.save(user);
+            mongoTemplate.save(item);
+        }
+
+        return getApiResponse(SUCCESS, null, null);
     }
 
     private Query getMarketItemsQuery(FiltersData filtersData, PaginatorData paginatorData) {

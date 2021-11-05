@@ -23,6 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         User user = mongoTemplate.findOne(query(where(USER_USERNAME).is(username)), User.class);
         return UserDetailsImpl.builder()
+                .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .cash(user.getCash())
