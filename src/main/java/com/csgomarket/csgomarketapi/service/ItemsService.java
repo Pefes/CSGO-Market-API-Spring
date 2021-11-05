@@ -50,6 +50,14 @@ public class ItemsService {
                 .build());
     }
 
+    public ApiResponse<GetItemsResponse> getTryOutItems() {
+        List<Item> items = mongoTemplate.find(query(where(ITEM_OPENABLE).is(true)).limit(3), Item.class);
+        return getApiResponse(SUCCESS, null, GetItemsResponse.builder()
+                .items(items)
+                .querySize(3)
+                .build());
+    }
+
     private Query getMarketItemsQuery(FiltersData filtersData, PaginatorData paginatorData) {
         Query queryWithFilters = getQueryWithFilters(filtersData, true);
         Query queryWithSorting = addSorting(queryWithFilters, filtersData.getSorting());

@@ -25,4 +25,9 @@ public class ItemsController {
     public ApiResponse<GetItemsResponse> getOwnedItems(@RequestBody GetItemsRequest request) {
         return itemsService.getOwnedItems(request);
     }
+
+    @PostMapping("getTryOutItems")
+    public ApiResponse<GetItemsResponse> getTryOutItems() {
+        return itemsService.getTryOutItems();
+    }
 }
