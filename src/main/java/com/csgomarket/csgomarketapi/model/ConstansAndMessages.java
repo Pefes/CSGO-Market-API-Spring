@@ -30,4 +30,5 @@ public interface ConstansAndMessages {
     String MESSAGE_BUY_ITEM_ERROR = "Could not buy item";
     String MESSAGE_SELL_ITEM_ERROR = "Could not sell item";
     String MESSAGE_OPEN_CONTAINER_ERROR = "Could not open container";
+    String MESSAGE_OPEN_TRY_OUT_CONTAINER_ERROR = "Could not open try out container";
 }

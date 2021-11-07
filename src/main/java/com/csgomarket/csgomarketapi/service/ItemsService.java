@@ -115,6 +115,17 @@ public class ItemsService {
         return getApiResponse(FAIL, MESSAGE_OPEN_CONTAINER_ERROR, null);
     }
 
+    public ApiResponse<OpenContainerResponse> openTryOutContainer(String containerId) {
+        Item container = mongoTemplate.findById(containerId, Item.class);
+
+        if (container != null && container.isOpenable()) {
+            Item drawnItem = DrawItem.draw(container.getContent());
+            return getApiResponse(SUCCESS, null, new OpenContainerResponse(drawnItem));
+        }
+
+        return getApiResponse(FAIL, MESSAGE_OPEN_TRY_OUT_CONTAINER_ERROR, null);
+    }
+
     private Query getMarketItemsQuery(FiltersData filtersData, PaginatorData paginatorData) {
         Query queryWithFilters = getQueryWithFilters(filtersData, true);
         Query queryWithSorting = addSorting(queryWithFilters, filtersData.getSorting());

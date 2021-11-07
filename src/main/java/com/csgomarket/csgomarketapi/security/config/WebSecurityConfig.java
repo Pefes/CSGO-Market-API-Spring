@@ -22,6 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_WHITE_LIST = {
             "/api/login", "/api/register", "/api/getMarketItems", "/api/getTryOutItems",
+            "/api/openTryOutContainer",
             "/v2/api-docs", "/v3/api-docs", "/swagger-ui/**", "/swagger-resources/**"
     };
 

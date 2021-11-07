@@ -46,4 +46,9 @@ public class ItemsController {
     public ApiResponse<OpenContainerResponse> openContainer(@RequestBody OpenContainerRequest request) {
         return itemsService.openContainer(request.getContainerId());
     }
+
+    @PostMapping("openTryOutContainer")
+    public ApiResponse<OpenContainerResponse> openTryOutContainer(@RequestBody OpenContainerRequest request) {
+        return itemsService.openTryOutContainer(request.getContainerId());
+    }
 }
