@@ -1,6 +1,5 @@
 package com.csgomarket.csgomarketapi.controller;
 
-import com.csgomarket.csgomarketapi.model.item.Item;
 import com.csgomarket.csgomarketapi.payload.request.getitems.GetItemsRequest;
 import com.csgomarket.csgomarketapi.payload.request.itemtransaction.ItemTransactionRequest;
 import com.csgomarket.csgomarketapi.payload.request.opencontainer.OpenContainerRequest;
@@ -10,7 +9,6 @@ import com.csgomarket.csgomarketapi.payload.response.opencontainer.OpenContainer
 import com.csgomarket.csgomarketapi.service.ItemsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("api")

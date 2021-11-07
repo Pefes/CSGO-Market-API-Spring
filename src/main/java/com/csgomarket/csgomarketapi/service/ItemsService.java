@@ -102,7 +102,7 @@ public class ItemsService {
         Item container = mongoTemplate.findById(containerId, Item.class);
         User user = mongoTemplate.findById(userDetails.getId(), User.class);
 
-        if (user.getOwnedItems().contains(container.getId()) && container.isOpenable()) {
+        if (user != null && container != null && user.getOwnedItems().contains(container.getId()) && container.isOpenable()) {
             Item drawnItem = DrawItem.draw(container.getContent());
             Item createdItem = mongoTemplate.save(drawnItem);
             user.getOwnedItems().add(createdItem.getId());
