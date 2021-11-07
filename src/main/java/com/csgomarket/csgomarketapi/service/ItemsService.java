@@ -8,7 +8,9 @@ import com.csgomarket.csgomarketapi.payload.request.getitems.PaginatorData;
 import com.csgomarket.csgomarketapi.payload.request.getitems.SortingData;
 import com.csgomarket.csgomarketapi.payload.response.ApiResponse;
 import com.csgomarket.csgomarketapi.payload.response.getitems.GetItemsResponse;
+import com.csgomarket.csgomarketapi.payload.response.opencontainer.OpenContainerResponse;
 import com.csgomarket.csgomarketapi.security.userdetails.UserDetailsImpl;
+import com.csgomarket.csgomarketapi.util.DrawItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -93,6 +95,24 @@ public class ItemsService {
         }
 
         return getApiResponse(FAIL, MESSAGE_SELL_ITEM_ERROR, null);
+    }
+
+    public ApiResponse<OpenContainerResponse> openContainer(String containerId) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Item container = mongoTemplate.findById(containerId, Item.class);
+        User user = mongoTemplate.findById(userDetails.getId(), User.class);
+
+        if (user.getOwnedItems().contains(container.getId()) && container.isOpenable()) {
+            Item drawnItem = DrawItem.draw(container.getContent());
+            Item createdItem = mongoTemplate.save(drawnItem);
+            user.getOwnedItems().add(createdItem.getId());
+            mongoTemplate.save(user);
+            mongoTemplate.remove(container);
+
+            return getApiResponse(SUCCESS, null, new OpenContainerResponse(createdItem));
+        }
+
+        return getApiResponse(FAIL, MESSAGE_OPEN_CONTAINER_ERROR, null);
     }
 
     private Query getMarketItemsQuery(FiltersData filtersData, PaginatorData paginatorData) {

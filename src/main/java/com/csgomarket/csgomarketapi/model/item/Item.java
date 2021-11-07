@@ -1,5 +1,6 @@
 package com.csgomarket.csgomarketapi.model.item;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,6 +11,7 @@ import java.util.List;
 import static com.csgomarket.csgomarketapi.model.ConstansAndMessages.ITEMS_COLLECTION;
 
 @Data
+@Builder
 @Document(collection = ITEMS_COLLECTION)
 public class Item {
 

@@ -16,16 +16,18 @@ public interface ConstansAndMessages {
     String ITEM_OPENABLE = "openable";
     String ITEM_PRICE = "price";
     String ITEM_PURCHASABLE = "purchasable";
+    String EXTERIOR_FACTORY_NEW = "Factory New";
+    String TYPE_WEAPON = "Weapon";
 
 //    USERS COLLECTION
     String USERS_COLLECTION = "users";
     String USER_USERNAME = "username";
 
+//    MESSAGES
     String SUCCESS = "Success";
     String FAIL = "Fail";
-    String USERNAME_ALREADY_EXISTS = "Username already exists";
-
-//    MESSAGES
+    String MESSAGE_USERNAME_ALREADY_EXISTS = "Username already exists";
     String MESSAGE_BUY_ITEM_ERROR = "Could not buy item";
     String MESSAGE_SELL_ITEM_ERROR = "Could not sell item";
+    String MESSAGE_OPEN_CONTAINER_ERROR = "Could not open container";
 }

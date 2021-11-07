@@ -42,7 +42,7 @@ public class AuthenticationService {
 
     public ApiResponse<?> register(AuthenticationRequest request) {
         if (userExistsByUsername(request.getUsername())) {
-            return getApiResponse(FAIL, USERNAME_ALREADY_EXISTS, null);
+            return getApiResponse(FAIL, MESSAGE_USERNAME_ALREADY_EXISTS, null);
         }
 
         String encodedPassword = encoder.encode(request.getPassword());
