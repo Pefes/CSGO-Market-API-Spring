@@ -67,7 +67,7 @@ public class AuthenticationService {
         LoginResponse response = LoginResponse.builder()
                 .accessToken(jwt)
                 .expiresIn(tokenExpirationTime)
-                .userData(new UserData(userDetails.getUsername(), userDetails.getCash(), userDetails.getUserSettings()))
+                .userData(new UserData(userDetails.getUsername(), userDetails.getCash(), userDetails.getSettings()))
                 .build();
 
         return getApiResponse(SUCCESS, null, response);

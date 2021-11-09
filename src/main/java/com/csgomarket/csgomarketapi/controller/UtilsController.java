@@ -1,12 +1,13 @@
 package com.csgomarket.csgomarketapi.controller;
 
+import com.csgomarket.csgomarketapi.model.user.UserSettings;
+import com.csgomarket.csgomarketapi.payload.request.setusersettings.SetUserSettingsRequest;
 import com.csgomarket.csgomarketapi.payload.response.ApiResponse;
 import com.csgomarket.csgomarketapi.service.UtilsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api")
@@ -16,7 +17,12 @@ public class UtilsController {
     private UtilsService utilsService;
 
     @GetMapping("getAutocompleteOptions")
-    public ApiResponse<?> getAutocompleteOptions(@RequestParam String property) {
+    public ApiResponse<List<String>> getAutocompleteOptions(@RequestParam String property) {
         return utilsService.getAutocompleteOptions(property);
+    }
+
+    @PostMapping("setUserSettings")
+    public ApiResponse<?> setUserSettings(@RequestBody SetUserSettingsRequest request) {
+        return utilsService.setUserSettings(request.getUserSettings());
     }
 }

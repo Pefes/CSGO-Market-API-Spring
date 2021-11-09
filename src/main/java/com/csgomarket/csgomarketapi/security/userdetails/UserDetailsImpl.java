@@ -24,7 +24,7 @@ public class UserDetailsImpl implements UserDetails {
 
     private BigDecimal cash;
 
-    private UserSettings userSettings;
+    private UserSettings settings;
 
     private List<String> ownedItems;
 

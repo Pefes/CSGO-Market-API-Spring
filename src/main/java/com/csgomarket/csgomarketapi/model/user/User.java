@@ -26,7 +26,7 @@ public class User {
 
     private BigDecimal cash;
 
-    private UserSettings userSettings;
+    private UserSettings settings;
 
     @Field(targetType = FieldType.OBJECT_ID)
     private List<String> ownedItems;

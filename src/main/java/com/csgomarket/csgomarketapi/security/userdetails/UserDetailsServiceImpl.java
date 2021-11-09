@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .cash(user.getCash())
-                .userSettings(user.getUserSettings())
+                .settings(user.getSettings())
                 .ownedItems(user.getOwnedItems())
                 .build();
     }

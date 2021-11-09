@@ -36,4 +36,5 @@ public interface ConstansAndMessages {
     String MESSAGE_OPEN_CONTAINER_ERROR = "Could not open container";
     String MESSAGE_OPEN_TRY_OUT_CONTAINER_ERROR = "Could not open try out container";
     String MESSAGE_GET_AUTOCOMPLETE_OPTIONS_ERROR = "Could not open get autocomplete options";
+    String MESSAGE_SET_USER_SETTINGS_ERROR = "Could not set user settings";
 }
