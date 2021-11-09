@@ -23,6 +23,10 @@ public interface ConstansAndMessages {
     String USERS_COLLECTION = "users";
     String USER_USERNAME = "username";
 
+//    LAST_OPENED COLLECTION
+    String LAST_OPENED_COLLECTION = "lastopeneds";
+    String LAST_OPENED_OPENED_DATE = "openedDate";
+
 //    MESSAGES
     String SUCCESS = "Success";
     String FAIL = "Fail";

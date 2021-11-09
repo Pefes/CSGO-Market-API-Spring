@@ -1,6 +1,7 @@
 package com.csgomarket.csgomarketapi.service;
 
 import com.csgomarket.csgomarketapi.model.item.Item;
+import com.csgomarket.csgomarketapi.model.lastopened.LastOpened;
 import com.csgomarket.csgomarketapi.model.user.User;
 import com.csgomarket.csgomarketapi.payload.request.getitems.FiltersData;
 import com.csgomarket.csgomarketapi.payload.request.getitems.GetItemsRequest;
@@ -124,6 +125,16 @@ public class ItemsService {
         }
 
         return getApiResponse(FAIL, MESSAGE_OPEN_TRY_OUT_CONTAINER_ERROR, null);
+    }
+
+    public ApiResponse<List<LastOpened>> getLastOpenedItems() {
+        Query query = new Query()
+                .with(Sort.by(Direction.ASC, LAST_OPENED_OPENED_DATE))
+                .limit(20);
+
+        List<LastOpened> items = mongoTemplate.find(query, LastOpened.class);
+
+        return getApiResponse(SUCCESS, null, items);
     }
 
     private Query getMarketItemsQuery(FiltersData filtersData, PaginatorData paginatorData) {
