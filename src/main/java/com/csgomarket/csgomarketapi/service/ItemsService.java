@@ -34,9 +34,12 @@ public class ItemsService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Autowired
+    private MongoService mongoService;
+
     public ApiResponse<GetItemsResponse> getMarketItems(GetItemsRequest request) {
         Query query = getMarketItemsQuery(request.getFiltersData(), request.getPaginatorData());
-        long querySize = getQuerySize(query);
+        long querySize = mongoService.getQuerySize(query);
         List<Item> items = querySize > 0 ? mongoTemplate.find(query, Item.class) : List.of();
         return getApiResponse(SUCCESS, null, GetItemsResponse.builder()
                 .items(items)
@@ -46,7 +49,7 @@ public class ItemsService {
 
     public ApiResponse<GetItemsResponse> getOwnedItems(GetItemsRequest request) {
         Query query = getOwnedItemsQuery(request.getFiltersData(), request.getPaginatorData());
-        long querySize = getQuerySize(query);
+        long querySize = mongoService.getQuerySize(query);
         List<Item> items = querySize > 0 ? mongoTemplate.find(query, Item.class) : List.of();
         return getApiResponse(SUCCESS, null, GetItemsResponse.builder()
                 .items(items)
@@ -138,76 +141,20 @@ public class ItemsService {
     }
 
     private Query getMarketItemsQuery(FiltersData filtersData, PaginatorData paginatorData) {
-        Query queryWithFilters = getQueryWithFilters(filtersData, true);
-        Query queryWithSorting = addSorting(queryWithFilters, filtersData.getSorting());
-        return addPagination(queryWithSorting, paginatorData);
+        Query queryWithFilters = mongoService.getQueryWithFilters(filtersData, true);
+        Query queryWithSorting = mongoService.addSorting(queryWithFilters, filtersData.getSorting());
+        return mongoService.addPagination(queryWithSorting, paginatorData);
     }
 
     private Query getOwnedItemsQuery(FiltersData filtersData, PaginatorData paginatorData) {
-        Query queryWithFilters = getQueryWithFilters(filtersData, false);
+        Query queryWithFilters = mongoService.getQueryWithFilters(filtersData, false);
         Query queryWithOwnedItems = getQueryWithOwnedItems(queryWithFilters);
-        Query queryWithSorting = addSorting(queryWithOwnedItems, filtersData.getSorting());
-        return addPagination(queryWithSorting, paginatorData);
-    }
-
-    private Query getQueryWithFilters(FiltersData filtersData, boolean purchasable) {
-        return query(
-                new Criteria().andOperator(
-                        where(ITEM_PURCHASABLE).is(purchasable),
-                        new Criteria().orOperator(
-                                where(ITEM_NAME).regex(validatePropertyValue(filtersData.getName())),
-                                where(ITEM_NAME).exists(false)
-                        ),
-                        new Criteria().orOperator(
-                                where(ITEM_TYPE).regex(validatePropertyValue(filtersData.getType())),
-                                where(ITEM_TYPE).exists(false)
-                        ),
-                        new Criteria().orOperator(
-                                where(ITEM_RARITY).regex(validatePropertyValue(filtersData.getRarity())),
-                                where(ITEM_RARITY).exists(false)
-                        ),
-                        new Criteria().orOperator(
-                                where(ITEM_EXTERIOR).regex(validatePropertyValue(filtersData.getExterior())),
-                                where(ITEM_EXTERIOR).exists(false)
-                        ),
-                        new Criteria().orOperator(
-                                where(ITEM_OPENABLE).is(filtersData.isOpenable()),
-                                where(ITEM_OPENABLE).exists(false))
-                        )
-                );
-    }
-
-    private String validatePropertyValue(String value) {
-        return value == null ? "" : Pattern.quote(value);
-    }
-
-    private Query addSorting(Query query, SortingData sortingData) {
-        Direction direction = Direction.ASC;
-
-        if (sortingData != null && sortingData.getPrice() != null) {
-            direction = SORTING_DESC.equals(sortingData.getPrice()) ? Direction.DESC : Direction.ASC;
-        }
-
-        return query.with(Sort.by(direction, ITEM_PRICE));
-    }
-
-    private Query addPagination(Query query, PaginatorData paginatorData) {
-        int pageSize = paginatorData.getPageSize() == 0 ? DEFAULT_PAGE_SIZE : paginatorData.getPageSize();
-        int pageNumber = paginatorData.getPageNumber() == 0 ? 1 : paginatorData.getPageNumber() - 1;
-        long skipValue = (long) (pageNumber - 1) * pageSize;
-        return query.skip(skipValue).limit(pageSize);
+        Query queryWithSorting = mongoService.addSorting(queryWithOwnedItems, filtersData.getSorting());
+        return mongoService.addPagination(queryWithSorting, paginatorData);
     }
 
     private Query getQueryWithOwnedItems(Query query) {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return query.addCriteria(where(ID).in(userDetails.getOwnedItems()));
-    }
-
-    private long getQuerySize(Query query) {
-        long prevSkip = query.getSkip();
-        int prevLimit = query.getLimit();
-        long querySize = mongoTemplate.count(query.skip(0).limit(0), Item.class);
-        query.skip(prevSkip).limit(prevLimit);
-        return querySize;
     }
 }
