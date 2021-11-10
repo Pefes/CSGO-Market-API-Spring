@@ -53,13 +53,12 @@ public class MongoService {
     }
 
     public Query addSorting(Query query, SortingData sortingData) {
-        Sort.Direction direction = Sort.Direction.ASC;
-
         if (sortingData != null && sortingData.getPrice() != null) {
-            direction = SORTING_DESC.equals(sortingData.getPrice()) ? Sort.Direction.DESC : Sort.Direction.ASC;
+            Sort.Direction direction = SORTING_DESC.equals(sortingData.getPrice()) ? Sort.Direction.DESC : Sort.Direction.ASC;
+            return query.with(Sort.by(direction, ITEM_PRICE));
         }
 
-        return query.with(Sort.by(direction, ITEM_PRICE));
+        return query;
     }
 
     public Query addPagination(Query query, PaginatorData paginatorData) {
