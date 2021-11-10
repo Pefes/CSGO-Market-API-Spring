@@ -10,6 +10,9 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import static com.csgomarket.csgomarketapi.model.ConstansAndMessages.*;
@@ -23,30 +26,26 @@ public class MongoService {
     private MongoTemplate mongoTemplate;
 
     public Query getQueryWithFilters(FiltersData filtersData, boolean purchasable) {
-        return query(
-                new Criteria().andOperator(
-                        where(ITEM_PURCHASABLE).is(purchasable),
-                        new Criteria().orOperator(
-                                where(ITEM_NAME).regex(validatePropertyValue(filtersData.getName())),
-                                where(ITEM_NAME).exists(false)
-                        ),
-                        new Criteria().orOperator(
-                                where(ITEM_TYPE).regex(validatePropertyValue(filtersData.getType())),
-                                where(ITEM_TYPE).exists(false)
-                        ),
-                        new Criteria().orOperator(
-                                where(ITEM_RARITY).regex(validatePropertyValue(filtersData.getRarity())),
-                                where(ITEM_RARITY).exists(false)
-                        ),
-                        new Criteria().orOperator(
-                                where(ITEM_EXTERIOR).regex(validatePropertyValue(filtersData.getExterior())),
-                                where(ITEM_EXTERIOR).exists(false)
-                        ),
-                        new Criteria().orOperator(
-                                where(ITEM_OPENABLE).is(filtersData.isOpenable()),
-                                where(ITEM_OPENABLE).exists(false))
-                )
-        );
+        List<Criteria> andCriteria = new ArrayList<>();
+        andCriteria.add(where(ITEM_PURCHASABLE).is(purchasable));
+        andCriteria.add(getOrCriteriaForTextProperty(ITEM_NAME, filtersData.getName()));
+        andCriteria.add(getOrCriteriaForTextProperty(ITEM_TYPE, filtersData.getType()));
+        andCriteria.add(getOrCriteriaForTextProperty(ITEM_RARITY, filtersData.getRarity()));
+        andCriteria.add(getOrCriteriaForTextProperty(ITEM_EXTERIOR, filtersData.getExterior()));
+
+        if (filtersData.getOpenable() != null) {
+            andCriteria.add(new Criteria().orOperator(
+                where(ITEM_OPENABLE).is(filtersData.getOpenable()),
+                where(ITEM_OPENABLE).exists(false)));
+        }
+
+        return query(new Criteria().andOperator(andCriteria));
+    }
+
+    private Criteria getOrCriteriaForTextProperty(String key, String value) {
+        return new Criteria().orOperator(
+            where(key).regex(validatePropertyValue(value)),
+            where(key).exists(false));
     }
 
     private String validatePropertyValue(String value) {

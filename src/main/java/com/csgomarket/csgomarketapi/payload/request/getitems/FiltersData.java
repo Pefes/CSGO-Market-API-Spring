@@ -13,7 +13,7 @@ public class FiltersData {
 
     private String exterior;
 
-    private boolean openable;
+    private Boolean openable;
 
     private SortingData sorting;
 }
